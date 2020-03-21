@@ -1,1 +1,1 @@
-# Maze in js ES6
+# Maze in ES6
