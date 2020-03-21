@@ -11,14 +11,19 @@ class Maze
 
     validate()
     {
+        // Verify maze size
         if ((this.maze.length === this.size) && (this.maze[0].length === this.size))
         {
-            return true;
+            // Verify start and end points are values 0 (path)
+            if (
+                (this.maze[this.start.x][this.start.y] === 0) &&
+                (this.maze[this.end.x][this.end.y] === 0)
+            )
+            {
+                return true;
+            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     solve()
@@ -36,14 +41,14 @@ class Maze
 
             this.findPath(this.start, 0, trace);
 
-            this.sortSolutions();
 
-            return this.solutions[0];
+            if (this.solutions.length > 0)
+            {
+                this.sortSolutions();
+                return this.solutions[0];
+            }
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     findPath(cursor, count, trace)
