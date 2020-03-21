@@ -2,31 +2,52 @@ class Maze
 {
     constructor(maze, start, end)
     {
+        this.size = 4;
         this.maze = maze;
         this.start = { x: start.x, y: start.y };
         this.end = { x: end.x, y: end.y };
         this.solutions = [];
     }
 
+    validate()
+    {
+        if ((this.maze.length === this.size) && (this.maze[0].length === this.size))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     solve()
     {
-        const trace = [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0]
-        ];
+        const isValid = this.validate();
 
-        this.findPath(this.start, 0, trace);
+        if (isValid)
+        {
+            const trace = [
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]
+            ];
 
-        this.sortSolutions();
+            this.findPath(this.start, 0, trace);
 
-        return this.solutions[0];
+            this.sortSolutions();
+
+            return this.solutions[0];
+        }
+        else
+        {
+            return null;
+        }
     }
 
     findPath(cursor, count, trace)
     {
-        // Variables
         const value = this.maze[cursor.x][cursor.y];
 
         const isPath = (value === 0);
@@ -34,9 +55,9 @@ class Maze
 
         if (isPath && !isVisited)
         {
-            // Variables
             const isEnd = ((this.end.x === cursor.x) && (this.end.y === cursor.y));
             const nextCount = count + 1;
+            const limit = this.size - 1;
 
             const nextTrace = trace.map(x => x.map(y => y));
             nextTrace[cursor.x][cursor.y] = nextCount;
@@ -48,7 +69,7 @@ class Maze
             else
             {
                 // TRY GO DOWN
-                if (cursor.x < 3)
+                if (cursor.x < limit)
                 {
                     const nextCursor = this.moveCursor(cursor, 1, 0);
                     this.findPath(nextCursor, nextCount, nextTrace);
@@ -62,7 +83,7 @@ class Maze
                 }
 
                 // TRY GO RIGHT
-                if (cursor.y < 3)
+                if (cursor.y < limit)
                 {
                     const nextCursor = this.moveCursor(cursor, 0, 1);
                     this.findPath(nextCursor, nextCount, nextTrace);
