@@ -1,1 +1,1 @@
-# maze-js-es6
+# Maze in js ES6
