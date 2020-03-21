@@ -15,19 +15,27 @@ class Maze
     validate()
     {
         // Verify maze size
-        if ((this.maze.length === this.size) && (this.maze[0].length === this.size))
+        if (
+            (this.maze.length === this.size) &&
+            (this.maze[0].length === this.size)
+        )
         {
             // Verify that start and end points are in the maze
-
-
-
-            // Verify start and end points are values 0 (path)
             if (
-                (this.maze[this.start.x][this.start.y] === 0) &&
-                (this.maze[this.end.x][this.end.y] === 0)
+                (this.start.x >= 0) && (this.start.x <= this.size) &&
+                (this.start.y >= 0) && (this.start.y <= this.size) &&
+                (this.end.x >= 0) && (this.end.x <= this.size) &&
+                (this.end.y >= 0) && (this.end.y <= this.size)
             )
             {
-                return true;
+                // Verify start and end points are values 0 (path)
+                if (
+                    (this.maze[this.start.x][this.start.y] === 0) &&
+                    (this.maze[this.end.x][this.end.y] === 0)
+                )
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -50,7 +58,6 @@ class Maze
             ];
 
             this.findPath(this.start, 0, trace);
-
 
             if (this.solutions.length > 0)
             {
