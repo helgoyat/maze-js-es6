@@ -9,11 +9,18 @@ class Maze
         this.solutions = [];
     }
 
+    /**
+     * Verify that maze, start and end points are valid
+     */
     validate()
     {
         // Verify maze size
         if ((this.maze.length === this.size) && (this.maze[0].length === this.size))
         {
+            // Verify that start and end points are in the maze
+
+
+
             // Verify start and end points are values 0 (path)
             if (
                 (this.maze[this.start.x][this.start.y] === 0) &&
@@ -26,6 +33,9 @@ class Maze
         return false;
     }
 
+    /**
+     * Main method used to solve maze
+     */
     solve()
     {
         const isValid = this.validate();
@@ -51,6 +61,12 @@ class Maze
         return null;
     }
 
+    /**
+     * Find possible paths from a given point
+     * @param {obj} cursor 
+     * @param {int} count 
+     * @param {array} trace 
+     */
     findPath(cursor, count, trace)
     {
         const value = this.maze[cursor.x][cursor.y];
@@ -108,6 +124,12 @@ class Maze
         }
     }
 
+    /**
+     * Move cursor position
+     * @param {obj} prevCursor 
+     * @param {int} x diff between prev and new pos
+     * @param {int} y diff between prev and new pos
+     */
     moveCursor(prevCursor, x = 0, y = 0)
     {
         const cursor = { x: prevCursor.x, y: prevCursor.y };
@@ -116,6 +138,11 @@ class Maze
         return cursor;
     }
 
+    /**
+     * Add maze found solution to all solutions array
+     * @param {array} trace 
+     * @param {int} count 
+     */
     addSolution(trace, count)
     {
         const sols = [...this.solutions];
@@ -123,6 +150,9 @@ class Maze
         this.solutions = sols;
     }
 
+    /**
+     * Sort solutions from shortest to longest path
+     */
     sortSolutions()
     {
         const sols = this.solutions;
